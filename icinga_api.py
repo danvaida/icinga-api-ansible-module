@@ -24,7 +24,9 @@ version_added: "0.1"
 author: "Dan Vaida (@danvaida)"
 short_description: Interact with the Icinga API
 description:
-- A module to control Icinga through its API. Certificate-based authentication shall be added in a future version. This modules expects that the API feature of Icinga has already been enabled, configured and is available.
+  - A module to control Icinga through its API.
+  - Certificate-based authentication shall be added in a future version.
+  - This modules expects that the API feature of Icinga has already been enabled, configured and is available.
 requirements: []
 options:
   url:
@@ -70,23 +72,28 @@ options:
     default: "present"
   headers:
     description:
-      - Sets custom HTTP headers. Pass custom headers in the form of YAML hash/dict.
+      - Sets custom HTTP headers.
+      - Pass custom headers in the form of YAML hash/dict.
     required: false
   validate_certs:
     description:
-      - If set to C(false), SSL certificates will not be validated. This should only be set to C(false) when used on personally controlled sites using self-signed certificates.
+      - If set to C(false), SSL certificates will not be validated.
+      - This should only be set to C(false) when used on personally controlled sites using self-signed certificates.
     required: false
     choices: [ "true", "false" ]
     default: "true"
   cascade_delete:
     description:
-      - Delete object(s) that are depending on the deleted object(s) (e.g. services on a host). May be used in conjunction with C(state=absent).
+      - Delete object(s) that are depending on the deleted object(s) (e.g. services on a host).
+      - May be used in conjunction with C(state=absent).
     required: false
     choices: [ "true", "false" ]
     default: false
   definition:
     description:
-      - Definition of the configuration object. Must be used when C(endpoint=objects) and C(state=present). Send configuration object definition as JSON.
+      - Definition of the configuration object.
+      - Must be used when C(endpoint=objects) and C(state=present).
+      - Send configuration object definition as JSON.
     required: false
 '''
 
