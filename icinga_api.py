@@ -216,29 +216,82 @@ def main():
     changed = False
     failed  = False
 
+    params = {
+        "url": {
+            "required": True,
+            "default": None,
+            "type": 'str'
+        },
+        "port": {
+            "required": False,
+            "default": '5665',
+            "type": 'int'
+        },
+        "url_username": {
+            "required": False,
+            "default": 'root',
+            "aliases": ['user']
+        },
+        "url_password": {
+            "required": False,
+            "default": 'icinga',
+            "aliases": ['password']
+        },
+        "endpoint": {
+            "required": True,
+            "default": None,
+            "type": 'str',
+            "choices": ['objects', 'status']
+        },
+        "object_family": {
+            "required": False,
+            "default": None,
+            "type": 'str',
+            "choices": ['zones', 'hostgroups', 'hosts', 'servicegroups', 'services']
+        },
+        "object_name": {
+            "required": False,
+            "default": None,
+            "type": 'str',
+            "aliases": ['name']
+        },
+        "state": {
+            "required": False,
+            "default": 'present',
+            "type": 'str',
+            "choices": ['present', 'absent']
+        },
+        "headers": {
+            "required": False,
+            "default": {},
+            "type": 'dict'
+        },
+        "cascade_delete": {
+            "required": False,
+            "default": False,
+            "type": 'bool',
+            "choices": ['true', 'false']
+        },
+        "definition": {
+            "required": False,
+            "default": {},
+            "type": 'dict'
+        }
+    }
     argument_spec = url_argument_spec()
+    argument_spec.update(params)
     argument_spec.update(dict(
-        argument_spec = dict(
-            url=dict(required=True, default=None, type='str'),
-            port=dict(required=False, default='5665', type='int'),
-            url_username=dict(required=False, default='root', aliases=['user']),
-            url_password=dict(required=False, default='icinga', aliases=['password']),
-            endpoint=dict(required=True, default=None, type='str', choices=['objects', 'status']),
-            object_family=dict(required=False, default=None, type='str', choices=['zones', 'hostgroups', 'hosts', 'servicegroups', 'services']),
-            object_name=dict(required=False, default=None, type='str', aliases=['name']),
-            state=dict(required=False, default='present', type='str', choices=['present', 'absent']),
-            headers=dict(required=False, default={}, type='dict'),
-            cascade_delete=dict(required=False, default=False, type='bool', choices=['true', 'false']),
-            definition=dict(required=False, default={}, type='dict'),
-        ),
         mutually_exclusive=(('cascade_delete', 'definition')),
+        check_invalid_arguments=False,
         supports_check_mode=True
     ))
 
     module = AnsibleModule(
-        argument_spec=argument_spec,
-        check_invalid_arguments=False
+        argument_spec=argument_spec
     )
+
+    module.exit_json(changed=False, meta=module.params)
+
 
 # import module snippets
 from ansible.module_utils.basic import *
